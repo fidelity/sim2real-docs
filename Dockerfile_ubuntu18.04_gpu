@@ -1,0 +1,50 @@
+FROM nvidia/cudagl:10.1-base-ubuntu18.04
+
+# Enviorment variables
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+ENV PYTHONUNBUFFERED=TRUE
+ENV PYTHONDONTWRITEBYTECODE=TRUE
+ENV BLENDER_PATH "/bin/2.91"
+ENV BLENDER_PYTHON "/bin/2.91/python/bin/python3.7m"
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \ 
+	wget \ 
+	libopenexr-dev \ 
+	bzip2 \ 
+	build-essential \ 
+	zlib1g-dev \ 
+	libxmu-dev \ 
+	libxi-dev \ 
+	libxxf86vm-dev \ 
+	libfontconfig1 \ 
+	libxrender1 \ 
+	libgl1-mesa-glx \ 
+	xz-utils
+
+# Download and install Blender
+RUN wget https://mirror.clarkson.edu/blender/release/Blender2.91/blender-2.91.0-linux64.tar.xz \ 
+	&& tar -xvf blender-2.91.0-linux64.tar.xz --strip-components=1 -C /bin \ 
+	&& rm -rf blender-2.91.0-linux64.tar.xz \ 
+	&& rm -rf blender-2.91.0-linux64 
+
+# Download the Python source since it is not bundled with Blender
+RUN wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz \ 
+	&& tar -xzf Python-3.7.0.tgz \ 
+	&& cp -r Python-3.7.0/Include/* $BLENDER_PATH/python/include/python3.7m/ \ 
+	&& rm -rf Python-3.7.0.tgz \ 
+	&& rm -rf Python-3.7.0 
+
+COPY ./sim2real_docs /src/sim2real_docs
+COPY ./install.py /src/
+COPY ./setup.py /src/
+COPY ./requirements.txt /src/
+COPY ./README.md /src/
+
+# Set the working directory
+WORKDIR /src
+
+#install sim2real_docs
+RUN ${BLENDER_PYTHON} install.py
