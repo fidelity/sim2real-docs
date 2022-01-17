@@ -32,7 +32,7 @@ class Camera:
         """
         Function sets the camera roation
         """
-        self.camera_object.rotation_euler[0] = math.radian(self.camera_configs.camera_x_rotation)
+        self.camera_object.rotation_euler[0] = math.radians(self.camera_configs.camera_x_rotation)
         self.camera_object.rotation_euler[1] = math.radians(self.camera_configs.camera_y_rotation)
         self.camera_object.rotation_euler[2] = math.radians(self.camera_configs.camera_z_rotation)
 
