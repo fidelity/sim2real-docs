@@ -6,6 +6,8 @@
  Sim2Real Docs is a python framework for synthesizing datasets and performing domain randomization of documents in natural scenes. 
  It enables programmatic 3D rendering of documents using Blender, an open source tool for 3D modeling and ray-traced rendering.
  The library creates a scene and renders a document with varying light, camera and background conditions. These simulated datasets can be used to build robust machine learning models in document space. Further, these models can be iterated upon with real-world data by either fine tuning or making adjustments to domain randomization parameters. 
+ 
+ This work was presented as part of Neurips 2021 DCAI workshop - ["Sim2Real Docs: Domain Randomization for Documents in Natural Scenes using Ray-traced Rendering"](https://arxiv.org/abs/2112.09220).
 
 # Features 
 -  Create datasets of documents simulating physical interaction of light, camera and background.
