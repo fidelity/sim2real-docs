@@ -15,8 +15,12 @@ dst_path = sysconfig.get_path('purelib')
 def main():
     subprocess.call([sys.executable, '-m', 'ensurepip','--upgrade'])
     subprocess.call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'pip'])
-    subprocess.call([sys.executable, '-m', 'pip', 'install',install_path])
-    subprocess.call(['cp', '-r', src_path, dst_path])
+    subprocess.call([sys.executable, '-m', 'pip', 'install', install_path], shell=True)
+
+    if os.name == 'nt':
+        subprocess.call(['xcopy', src_path, os.path.join(dst_path, package_name), '/s/h/e/k/f/c/i'])
+    else:
+        subprocess.call(['cp', '-r', src_path, dst_path])
 
 if __name__ == "__main__":
     main()
